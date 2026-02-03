@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Be My Valentine</title>
+
+  <style>
+    body{
+      margin:0; min-height:100vh;
+      display:flex; align-items:center; justify-content:center;
+      font-family: system-ui, Arial, sans-serif;
+      background: linear-gradient(135deg,#fff1f5,#ffe4e6);
+      padding:20px;
+    }
+
+    .card{
+      max-width:800px;
+      width:100%;
+      background:white;
+      border-radius:20px;
+      box-shadow:0 20px 40px rgba(0,0,0,.15);
+      padding:24px;
+      text-align:center;
+    }
+
+    h1{
+      font-size:40px;
+      margin-bottom:10px;
+    }
+
+    p{
+      font-size:18px;
+      color:#444;
+      margin-bottom:20px;
+    }
+
+    .photo{
+      width:100%;
+      border-radius:16px;
+      overflow:hidden;
+      margin-bottom:20px;
+    }
+
+    .photo img{
+      width:100%;
+      height:auto;
+      display:block;
+    }
+
+    .arena{
+      position:relative;
+      height:160px;
+      margin-top:10px;
+    }
+
+    button{
+      position:absolute;
+      border:none;
+      border-radius:999px;
+      cursor:pointer;
+      font-weight:800;
+      box-shadow:0 10px 20px rgba(0,0,0,.25);
+      transition: transform .15s ease;
+    }
+
+    #yes{
+      background:#22c55e;
+      color:white;
+      font-size:22px;
+      padding:16px 32px;
+      left:25%;
+      top:50%;
+      transform:rotate(-2deg);
+    }
+
+    #yes:hover{
+      transform:rotate(-2deg) scale(1.06);
+    }
+
+    #no{
+      background:#ef4444;
+      color:white;
+      font-size:14px;
+      padding:10px 18px;
+      left:60%;
+      top:40%;
+      transform:rotate(2deg);
+    }
+
+    .result{
+      display:none;
+      margin-top:20px;
+      font-size:22px;
+      font-weight:800;
+      color:#16a34a;
+    }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <h1>Will you be my Valentine? 💘</h1>
+
+  <p>I promise: dinner, laughs, and me being obsessed with you. Just… say yes 😏</p>
+
+  <div class="photo">
+    <img src="vday.jpg" alt="our photo">
+  </div>
+
+  <div class="arena" id="arena">
+    <button id="yes">YES 💚</button>
+    <button id="no">no</button>
+  </div>
+
+  <div class="result" id="result"> VAMMOOOOSS!! See you next Saturday for a romantic dih-ner 🍆</div>
+</div>
+
+<script>
+const arena = document.getElementById("arena");
+const noBtn = document.getElementById("no");
+const yesBtn = document.getElementById("yes");
+const result = document.getElementById("result");
+
+function moveNo(){
+  const a = arena.getBoundingClientRect();
+  const b = noBtn.getBoundingClientRect();
+  const x = Math.random() * (a.width - b.width);
+  const y = Math.random() * (a.height - b.height);
+  noBtn.style.left = x + "px";
+  noBtn.style.top  = y + "px";
+}
+
+noBtn.addEventListener("mouseenter", moveNo);
+
+arena.addEventListener("mousemove", e => {
+  const a = arena.getBoundingClientRect();
+  const mx = e.clientX - a.left;
+  const my = e.clientY - a.top;
+  const b = noBtn.getBoundingClientRect();
+  const bx = (b.left - a.left) + b.width/2;
+  const by = (b.top  - a.top)  + b.height/2;
+  const d = Math.hypot(mx-bx, my-by);
+  if(d < 90) moveNo();
+});
+
+yesBtn.addEventListener("click", () => {
+  result.style.display = "block";
+  noBtn.disabled = true;
+  yesBtn.disabled = true;
+});
+</script>
+
+</body>
+</html>
